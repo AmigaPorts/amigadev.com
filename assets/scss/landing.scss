@@ -1,0 +1,35 @@
+.amigadev-landing-img {
+    height: 350px;
+    object-fit: cover;
+
+    @include media-breakpoint-down(md) {
+        height: 200px;
+    }
+}
+
+.amigadev-landing-round-logo {
+    width: auto;
+    height: 190px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    border: 0px;
+
+    @include media-breakpoint-down(md) {
+        height: 140px;
+    }
+}
+
+.amigadev-landing-top-img-label {
+    font-size: 12px;
+    bottom: 2px;
+
+    @include media-breakpoint-down(md) {
+        top: 0;
+        bottom: auto;
+    }
+}
+
+.amigadev-landing-img-label {
+    font-size: 12px;
+    bottom: 0;
+}

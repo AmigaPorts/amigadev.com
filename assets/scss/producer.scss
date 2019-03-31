@@ -1,0 +1,40 @@
+.amigadev-producer-top-container {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    mark {
+        font-size: 18px;
+        background: $amigadev-transparent-white;
+        line-height: 29px;
+        box-shadow: 5px 0 0 $amigadev-transparent-white, -5px 0 0 $amigadev-transparent-white;
+
+        @include media-breakpoint-up(md) {
+            font-size: 23px;
+            line-height: 37px;
+            box-shadow: 8px 0 0 $amigadev-transparent-white, -8px 0 0 $amigadev-transparent-white;
+        }
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    .nav-link {
+        font-size: 20px;
+    }
+}
+
+.amigadev-producer-contact-img {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+.amigadev-producer-contact-container {
+    max-width: 440px;
+}
+
+.amigadev-producer-into-text {
+    max-width: 900px;
+}

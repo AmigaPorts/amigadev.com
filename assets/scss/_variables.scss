@@ -1,0 +1,22 @@
+/*
+amigadev VARIABLES
+*/
+$amigadev-primary: #202020;
+$amigadev-secondary: #f0bc02;
+$amigadev-inactive: #525252;
+$amigadev-transparent-white: #202020;
+$amigadev-font: 'Oswald', sans-serif;
+$text-color: #ffffff;
+
+/*
+BOOTSTRAP OVERRIDES
+*/
+$primary: $amigadev-primary;
+$secondary: $amigadev-secondary;
+$dark: $amigadev-inactive;
+
+//Button
+$btn-border-radius: 0;
+$btn-font-size: 18px;
+$btn-padding-y: 10px;
+$btn-padding-x: 45px;

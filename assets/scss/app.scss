@@ -1,0 +1,11 @@
+//Styles
+@import '~/assets/scss/fonts.scss';
+@import '~/assets/scss/_variables.scss';
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import '~/assets/scss/global.scss';
+
+//Page specific
+@import '~/assets/scss/landing.scss';
+@import '~/assets/scss/search.scss';
+@import '~/assets/scss/product.scss';
+@import '~/assets/scss/producer.scss';
