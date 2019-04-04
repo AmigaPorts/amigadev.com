@@ -1,7 +1,7 @@
 <template>
   <div>
-    <LoadingOverlay 
-      :text="'Loading...'" 
+    <LoadingOverlay
+      :text="'Loading...'"
       :show="loading"/>
     <img
       :src="port.imageUrl"
@@ -29,40 +29,40 @@
 </template>
 
 <script>
-import Downloads from '~/components/Downloads'
-import Breadcrumbs from '~/components/Breadcrumbs'
-import LoadingOverlay from '~/components/LoadingOverlay'
+import Downloads from '~/components/Downloads';
+import Breadcrumbs from '~/components/Breadcrumbs';
+import LoadingOverlay from '~/components/LoadingOverlay';
 
 export default {
-  auth: false,
-  components: {
-    Downloads,
-    Breadcrumbs,
-    LoadingOverlay
-  },
-  head() {
-    return {
-      title: this.title + 'AmigaDev'
-    }
-  },
-  data() {
-    return {
-      title: '',
-      loading: true,
-      port: {}
-    }
-  },
-  mounted() {
-    this.fetchProduct(this.$route.params.port)
-  },
-  methods: {
-    async fetchProduct(slug) {
-      const port = await this.$axios.$get('/v1/ports/' + slug)
-      this.port = port
+	auth: false,
+	components: {
+		Downloads,
+		Breadcrumbs,
+		LoadingOverlay
+	},
+	head() {
+		return {
+			title: this.title + 'AmigaDev'
+		};
+	},
+	data() {
+		return {
+			title: '',
+			loading: true,
+			port: {}
+		};
+	},
+	mounted() {
+		this.fetchProduct(this.$route.params.port);
+	},
+	methods: {
+		async fetchProduct(slug) {
+			const port = await this.$axios.$get('/v1/ports/' + slug);
+			this.port = port;
 
-      this.title = port.title + ' :: '
-      this.loading = false
-    }
-  }
-}
+			this.title = port.title + ' :: ';
+			this.loading = false;
+		}
+	}
+};
 </script>

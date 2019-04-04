@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="display-1">{{ error.statusCode }}</h1>
     <div v-if="error.statusCode === 404">
-      
+
       <h1>Sidan hittades inte</h1>
       <p>Sidan du försöker komma åt finns inte. Kontrollera att länkadressen är korrekt eller gå tillbaka till startsidan.</p>
     </div>
@@ -19,13 +19,13 @@
 
 <script>
 export default {
-  props: {
-    error: {
-      type: Object,
-      default() {
-        return []
-      }
-    }
-  }
-}
+	props: {
+		error: {
+			type: Object,
+			default() {
+				return [];
+			}
+		}
+	}
+};
 </script>

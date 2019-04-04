@@ -30,47 +30,47 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Invite from '~/components/Invite'
-import SocialLink from '~/components/SocialLink'
+import { mapGetters } from 'vuex';
+import Invite from '~/components/Invite';
+import SocialLink from '~/components/SocialLink';
 
 export default {
-  components: {
-    Invite,
-    SocialLink
-  },
-  data() {
-    return {
-      organization_number: 'Laddar organisationsnummer...',
-      postal_address: 'Laddar adress...',
-      social_links: []
-    }
-  },
-  computed: {
-    ...mapGetters(['isAuthenticated'])
-  },
-  mounted() {
-    this.fetchSiteInfo()
-  },
-  methods: {
-    async fetchSiteInfo() {
-      const site_info = await this.$axios.$get('/v1/site-info')
-      this.organization_number = site_info.organization_number
-      this.postal_address = site_info.postal_address
-      this.social_links = site_info.social_links
-    }
-  }
-}
+	components: {
+		Invite,
+		SocialLink
+	},
+	data() {
+		return {
+			organization_number: 'Laddar organisationsnummer...',
+			postal_address: 'Laddar adress...',
+			social_links: []
+		};
+	},
+	computed: {
+		...mapGetters(['isAuthenticated'])
+	},
+	mounted() {
+		this.fetchSiteInfo();
+	},
+	methods: {
+		async fetchSiteInfo() {
+			const site_info = await this.$axios.$get('/v1/site-info');
+			this.organization_number = site_info.organization_number;
+			this.postal_address = site_info.postal_address;
+			this.social_links = site_info.social_links;
+		}
+	}
+};
 </script>
 
 <style lang="scss">
 footer {
-  padding: 25px 0 30px 0;
-  flex-shrink: 0;
-  p,
-  label {
-    margin: 0 0 5px 0;
-    font-size: 12px;
-  }
+	padding: 25px 0 30px 0;
+	flex-shrink: 0;
+	p,
+	label {
+		margin: 0 0 5px 0;
+		font-size: 12px;
+	}
 }
 </style>

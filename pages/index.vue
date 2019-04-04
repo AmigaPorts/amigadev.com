@@ -1,9 +1,9 @@
 <template>
   <section>
-    <LoadingOverlay 
-      :text="'Loading...'" 
+    <LoadingOverlay
+      :text="'Loading...'"
       :show="loading"/>
-    <div 
+    <div
       class="w-100 vh-100 d-flex justify-content-center align-items-center flex-column">
       <img
         :src="landing.logo"
@@ -15,47 +15,47 @@
 </template>
 
 <script>
-import LoadingOverlay from '~/components/LoadingOverlay'
+import LoadingOverlay from '~/components/LoadingOverlay';
 
 export default {
-  middleware: 'guest',
-  auth: false,
-  components: {
-    LoadingOverlay
-  },
-  data() {
-    return {
-      loading: true,
-      landing: {
-        producers: [
-          {
-            imageUrl: ''
-          },
-          {
-            imageUrl: ''
-          },
-          {
-            imageUrl: ''
-          }
-        ]
-      }
-    }
-  },
-  mounted() {
-    this.fetchLandingInfo()
-  },
-  methods: {
-    async fetchLandingInfo() {
-      const landing = await this.$axios.$get('/v1/page/landing')
-      this.landing = landing
-      this.loading = false
-    }
-  }
-}
+	middleware: 'guest',
+	auth: false,
+	components: {
+		LoadingOverlay
+	},
+	data() {
+		return {
+			loading: true,
+			landing: {
+				producers: [
+					{
+						imageUrl: ''
+					},
+					{
+						imageUrl: ''
+					},
+					{
+						imageUrl: ''
+					}
+				]
+			}
+		};
+	},
+	mounted() {
+		this.fetchLandingInfo();
+	},
+	methods: {
+		async fetchLandingInfo() {
+			const landing = await this.$axios.$get('/v1/page/landing');
+			this.landing = landing;
+			this.loading = false;
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
 button {
-  margin: 10px;
+	margin: 10px;
 }
 </style>

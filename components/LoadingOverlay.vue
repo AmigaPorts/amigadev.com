@@ -1,6 +1,6 @@
 <template>
-  <div 
-    v-show="show" 
+  <div
+    v-show="show"
     class="amigadev-loading-overlay">
 
     <div class="amigadev-loading-overlay-container">
@@ -13,15 +13,15 @@
 
 <script>
 export default {
-  props: {
-    text: {
-      type: String,
-      required: true
-    },
-    show: {
-      type: Boolean,
-      default: true
-    }
-  }
-}
+	props: {
+		text: {
+			type: String,
+			required: true
+		},
+		show: {
+			type: Boolean,
+			default: true
+		}
+	}
+};
 </script>

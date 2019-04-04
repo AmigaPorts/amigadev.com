@@ -36,14 +36,14 @@
         </div>
       </div>
     </div>
-    <Loading 
+    <Loading
       :text="'Hämtar produkter och producenter'"
-      :show="loading" 
+      :show="loading"
       class="pt-4"/>
-    <div 
-      v-show="!loading" 
+    <div
+      v-show="!loading"
       class="container pb-5 pt-4">
-      
+
       <div class="text-center amigadev-filter-button-container mx-auto">
         <FilterButton
           v-for="(filter, index) in filters"
@@ -53,17 +53,17 @@
           :checked="filter.checked"
           class="mx-1 mx-md-2"
           @click.native="toggleChecked(index)"
-          
+
         />
       </div>
       <div class="text-right">
         <font-awesome-icon
-          :icon="['fas', 'th']" 
-          :class="[listView ? 'text-dark' : 'text-primary'] + ' amigadev-view'" 
+          :icon="['fas', 'th']"
+          :class="[listView ? 'text-dark' : 'text-primary'] + ' amigadev-view'"
           @click="setListView(false)" />
-        <font-awesome-icon 
+        <font-awesome-icon
           :icon="['fas', 'bars']"
-          :class="[listView ? 'text-primary' : 'text-dark'] + ' amigadev-view'" 
+          :class="[listView ? 'text-primary' : 'text-dark'] + ' amigadev-view'"
           @click="setListView(true)" />
       </div>
       <hr>
@@ -74,7 +74,7 @@
           <div class="col-4 col-md-3 text-center text-md-left">Telefonnummer</div>
           <div class="col-4 col-md-3 text-center text-md-left">E-postadress</div>
         </div>
-        <div 
+        <div
           v-for="(searchResult, index) in searchResults"
           :key="index"
           class="row border-top mb-1">
@@ -83,24 +83,24 @@
             {{ searchResult.type == 'producer' ? searchResult.title : searchResult.parentTitle }}
           </nuxt-link></div>
           <div class="amigadev-table-view-word-break col-4 col-md-3 text-center text-md-left">
-            <a 
-              :href="'tel:' + searchResult.phone" 
+            <a
+              :href="'tel:' + searchResult.phone"
               target="_top">
               {{ searchResult.phone }}
             </a>
           </div>
           <div class="amigadev-table-view-word-break col-4 col-md-3 text-center text-md-left">
-            <a 
-              :href="'mailto:' + searchResult.mail" 
+            <a
+              :href="'mailto:' + searchResult.mail"
               target="_top">
               {{ searchResult.mail }}
             </a>
           </div>
         </div>
       </div>
-      
-      <div 
-        v-if="!listView" 
+
+      <div
+        v-if="!listView"
         class="row mt-3">
         <Downloads
           v-for="(searchResult, index) in searchResults"
@@ -118,135 +118,136 @@
 </template>
 
 <script>
-import FilterButton from '~/components/FilterButton'
-import BigFilterButton from '~/components/BigFilterButton'
-import Downloads from '~/components/Downloads'
-import Loading from '~/components/Loading'
+import FilterButton from '~/components/FilterButton';
+import BigFilterButton from '~/components/BigFilterButton';
+import Downloads from '~/components/Downloads';
+import Loading from '~/components/Loading';
 
 export default {
-  components: {
-    FilterButton,
-    BigFilterButton,
-    Downloads,
-    Loading
-  },
-  data() {
-    return {
-      listView: false,
-      loading: true,
-      searchPhrase: '',
-      numProducers: 0,
-      numProducts: 0,
-      filters: [],
-      items: [],
-      bigButtonToggleValues: {
-        producer: true,
-        product: true
-      },
-      appliedFilters: [],
-      searchResults: []
-    }
-  },
-  mounted() {
-    this.fetchSearchDataAndUpdateResults()
-  },
-  methods: {
-    async fetchSearchDataAndUpdateResults() {
-      this.filters = await this.$axios.$get('/v1/search/categories')
-      this.items = await this.$axios.$get('/v1/search/items')
+	components: {
+		FilterButton,
+		BigFilterButton,
+		Downloads,
+		Loading
+	},
+	data() {
+		return {
+			listView: false,
+			loading: true,
+			searchPhrase: '',
+			numProducers: 0,
+			numProducts: 0,
+			filters: [],
+			items: [],
+			bigButtonToggleValues: {
+				producer: true,
+				product: true
+			},
+			appliedFilters: [],
+			searchResults: []
+		};
+	},
+	mounted() {
+		this.fetchSearchDataAndUpdateResults();
+	},
+	methods: {
+		async fetchSearchDataAndUpdateResults() {
+			this.filters = await this.$axios.$get('/v1/search/categories');
+			this.items = await this.$axios.$get('/v1/search/items');
 
-      this.applyFiltersAndUpdateResults()
-    },
-    applyFiltersAndUpdateResults() {
-      this.updateAppliedFilters()
-      this.updateResultBasedOnAppliedFilters()
-    },
-    updateAppliedFilters() {
-      this.appliedFilters = []
-      for (let filter in this.filters) {
-        this.filters[filter].name = this.filters[filter].name.replace(
-          '&amp;',
-          '&'
-        )
-        if (this.filters[filter].checked) {
-          this.appliedFilters.push(this.filters[filter].filterId)
-        }
-      }
-    },
-    updateResultBasedOnAppliedFilters() {
-      this.searchResults = []
-      this.numProducers = this.numProducts = 0
-      for (let item in this.items) {
-        //Compare two arrays and push to searchResult: []
-        if (this.items[item].type == 'producer') {
-          this.numProducers++
-        } else if (this.items[item].type == 'product') {
-          this.numProducts++
-        }
-        if (
-          this.items[item].categories.some(
-            r => this.appliedFilters.indexOf(r) >= 0
-          ) ||
-          this.appliedFilters.length == 0
-        ) {
-          if (
-            (this.items[item].type == 'producer' &&
-              this.bigButtonToggleValues.producer) ||
-            (this.items[item].type == 'product' &&
-              this.bigButtonToggleValues.product)
-          ) {
-            let title = this.items[item].title.toLowerCase()
-            let searchPhrase = this.searchPhrase.toLowerCase()
-            if (title.includes(searchPhrase)) {
-              this.searchResults.push(this.items[item])
-            }
-          }
-        }
-      }
+			this.applyFiltersAndUpdateResults();
+		},
+		applyFiltersAndUpdateResults() {
+			this.updateAppliedFilters();
+			this.updateResultBasedOnAppliedFilters();
+		},
+		updateAppliedFilters() {
+			this.appliedFilters = [];
+			for (let filter in this.filters) {
+				this.filters[filter].name = this.filters[filter].name.replace(
+					'&amp;',
+					'&'
+				);
+				if (this.filters[filter].checked) {
+					this.appliedFilters.push(this.filters[filter].filterId);
+				}
+			}
+		},
+		updateResultBasedOnAppliedFilters() {
+			this.searchResults = [];
+			this.numProducers = this.numProducts = 0;
+			for (let item in this.items) {
+				//Compare two arrays and push to searchResult: []
+				if (this.items[item].type == 'producer') {
+					this.numProducers++;
+				} else if (this.items[item].type == 'product') {
+					this.numProducts++;
+				}
+				if (
+					this.items[item].categories.some(
+						r => this.appliedFilters.indexOf(r) >= 0
+					) ||
+					this.appliedFilters.length == 0
+				) {
+					if (
+						(this.items[item].type == 'producer' &&
+							this.bigButtonToggleValues.producer) ||
+						(this.items[item].type == 'product' &&
+							this.bigButtonToggleValues.product)
+					) {
+						let title = this.items[item].title.toLowerCase();
+						let searchPhrase = this.searchPhrase.toLowerCase();
+						if (title.includes(searchPhrase)) {
+							this.searchResults.push(this.items[item]);
+						}
+					}
+				}
+			}
 
-      this.loading = false
-    },
-    toggleChecked(index) {
-      this.filters[index].checked = !this.filters[index].checked
-      this.applyFiltersAndUpdateResults()
-    },
-    toggleBigChecked(type) {
-      if (type == 'producer') {
-        this.bigButtonToggleValues.producer = !this.bigButtonToggleValues
-          .producer
-      } else if (type == 'product') {
-        this.bigButtonToggleValues.product = !this.bigButtonToggleValues.product
-      }
-      this.applyFiltersAndUpdateResults()
-    },
-    setListView(value) {
-      this.listView = value
-    }
-  }
-}
+			this.loading = false;
+		},
+		toggleChecked(index) {
+			this.filters[index].checked = !this.filters[index].checked;
+			this.applyFiltersAndUpdateResults();
+		},
+		toggleBigChecked(type) {
+			if (type == 'producer') {
+				this.bigButtonToggleValues.producer = !this.bigButtonToggleValues
+					.producer;
+			} else if (type == 'product') {
+				this.bigButtonToggleValues.product = !this.bigButtonToggleValues
+					.product;
+			}
+			this.applyFiltersAndUpdateResults();
+		},
+		setListView(value) {
+			this.listView = value;
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
 td,
 th {
-  padding: 2px 8px;
+	padding: 2px 8px;
 }
 
 th {
-  border-top: none;
+	border-top: none;
 }
 
 hr {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 .amigadev-view {
-  font-size: 24px;
-  margin-left: 4px;
-  cursor: pointer;
+	font-size: 24px;
+	margin-left: 4px;
+	cursor: pointer;
 }
 
 .amigadev-table-view-word-break {
-  word-break: break-all;
+	word-break: break-all;
 }
 </style>

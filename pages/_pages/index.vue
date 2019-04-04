@@ -68,37 +68,37 @@
 </template>
 
 <script>
-import Breadcrumbs from '~/components/Breadcrumbs'
-import LoadingOverlay from '~/components/LoadingOverlay'
+import Breadcrumbs from '~/components/Breadcrumbs';
+import LoadingOverlay from '~/components/LoadingOverlay';
 
 export default {
-  auth: true,
-  components: {
-    Breadcrumbs,
-    LoadingOverlay
-  },
-  head() {
-    return {
-      title: this.title + 'AmigaDev'
-    }
-  },
-  data() {
-    return {
-      title: '',
-      loading: true,
-      page: {}
-    }
-  },
-  mounted() {
-    this.fetchProduct(this.$route.params.pages)
-  },
-  methods: {
-    async fetchProduct(slug) {
-      const page = await this.$axios.$get('/v1/pages/' + slug)
-      this.page = page
-      this.title = page.post_title + ' :: '
-      this.loading = false
-    }
-  }
-}
+	auth: true,
+	components: {
+		Breadcrumbs,
+		LoadingOverlay
+	},
+	head() {
+		return {
+			title: this.title + 'AmigaDev'
+		};
+	},
+	data() {
+		return {
+			title: '',
+			loading: true,
+			page: {}
+		};
+	},
+	mounted() {
+		this.fetchProduct(this.$route.params.pages);
+	},
+	methods: {
+		async fetchProduct(slug) {
+			const page = await this.$axios.$get('/v1/pages/' + slug);
+			this.page = page;
+			this.title = page.post_title + ' :: ';
+			this.loading = false;
+		}
+	}
+};
 </script>

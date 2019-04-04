@@ -35,58 +35,58 @@
 //import Notification from '~/components/Notification'
 
 export default {
-  auth: true,
-  /*
+	auth: true,
+	/*
   components: {
     Notification
   },
   */
-  data() {
-    return {
-      email: '',
-      password: '',
-      error: null
-    }
-  },
+	data() {
+		return {
+			email: '',
+			password: '',
+			error: null
+		};
+	},
 
-  methods: {
-    async login() {
-      try {
-        await this.$auth.loginWith('local', {
-          data: {
-            username: this.email,
-            password: this.password
-          }
-        })
+	methods: {
+		async login() {
+			try {
+				await this.$auth.loginWith('local', {
+					data: {
+						username: this.email,
+						password: this.password
+					}
+				});
 
-        this.$router.push('/search')
-      } catch (e) {
-        this.error = e.response.data.message
-      }
-    }
-  }
-}
+				this.$router.push('/search');
+			} catch (e) {
+				this.error = e.response.data.message;
+			}
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
 input {
-  border-radius: 20px;
-  color: black;
+	border-radius: 20px;
+	color: black;
 
-  &::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: black;
-    opacity: 1; /* Firefox */
-  }
+	&::placeholder {
+		/* Chrome, Firefox, Opera, Safari 10.1+ */
+		color: black;
+		opacity: 1; /* Firefox */
+	}
 
-  &:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: black;
-  }
+	&:-ms-input-placeholder {
+		/* Internet Explorer 10-11 */
+		color: black;
+	}
 
-  &::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: black;
-  }
+	&::-ms-input-placeholder {
+		/* Microsoft Edge */
+		color: black;
+	}
 }
 </style>

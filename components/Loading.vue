@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     v-show="show" >
 
     <div class="amigadev-loading-container">
@@ -12,15 +12,15 @@
 
 <script>
 export default {
-  props: {
-    text: {
-      type: String,
-      required: true
-    },
-    show: {
-      type: Boolean,
-      default: true
-    }
-  }
-}
+	props: {
+		text: {
+			type: String,
+			required: true
+		},
+		show: {
+			type: Boolean,
+			default: true
+		}
+	}
+};
 </script>
