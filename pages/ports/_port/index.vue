@@ -20,8 +20,8 @@
       </div>
       <div class="col-md-12">
         <Downloads
-          :versions="port.versions"
-          :downloads="port.nightly"
+          :versions="portDownloads.versions"
+          :downloads="portDownloads.nightly"
         />
       </div>
     </div>
@@ -30,14 +30,12 @@
 
 <script>
 import Downloads from '~/components/Downloads';
-import Breadcrumbs from '~/components/Breadcrumbs';
 import LoadingOverlay from '~/components/LoadingOverlay';
 
 export default {
 	auth: false,
 	components: {
 		Downloads,
-		Breadcrumbs,
 		LoadingOverlay
 	},
 	head() {
@@ -49,18 +47,26 @@ export default {
 		return {
 			title: '',
 			loading: true,
-			port: {}
+			port: {},
+			portDownloads: {}
 		};
 	},
 	mounted() {
-		this.fetchProduct(this.$route.params.port);
+		this.fetchPort(this.$route.params.port);
+		this.fetchPortDownloads(this.$route.params.port);
 	},
 	methods: {
-		async fetchProduct(slug) {
-			const port = await this.$axios.$get('/v1/ports/' + slug);
-			this.port = port;
+		async fetchPort(slug) {
+			this.port = await this.$axios.$get('/v1/ports/' + slug);
 
-			this.title = port.title + ' :: ';
+			this.title = this.port.title + ' :: ';
+			this.loading = false;
+		},
+		async fetchPortDownloads(slug) {
+			this.portDownloads = await this.$axios.$get(
+				'/v1/ports/' + slug + '/downloads'
+			);
+
 			this.loading = false;
 		}
 	}

@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table id="staggered-list-demo">
     <thead>
       <tr>
         <th>Date</th>
@@ -8,27 +8,47 @@
           :key="index">{{ version.ext }}</th>
       </tr>
     </thead>
-    <tbody>
+    <transition-group
+      v-if="shorterList"
+      id="files"
+      :css="false"
+      name="staggered-fade"
+
+      tag="tbody"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @leave="leave">
       <tr
-        v-for="(download, index) in downloads"
-        :key="index">
-        <td>{{ index }}</td>
+        v-for="(download, key) in shorterList"
+        :key="download.date"
+        :data-index="key">
+        <td>{{ download.date }}</td>
         <td
           v-for="(dl, index) in versions"
           :key="index">
-          <a
-            v-if="download[index]"
-            :href="download[index].link"
-            :title="'Download ' + index"
-            itemprop="downloadUrl">
-            <strong>
-              <i class="far fa-arrow-alt-circle-down"/>
-              {{ download[index].modifiedDate }}
-            </strong>
-          </a>
+          <div v-if="download.files[index]">
+            <a
+              v-if="download.files[index]"
+              :href="download.files[index].link"
+              :title="'Download ' + index"
+              itemprop="downloadUrl">
+              <strong>
+                <i class="far fa-arrow-alt-circle-down"/>
+                {{ download.files[index].modifiedDate }}
+              </strong>
+            </a>
+            <a
+              v-if="download.files[index].buildNumber"
+              :href="download.files[index].buildUrl"
+              :title="'Build number  ' + download.files[index].buildNumber">
+              <strong>
+                (#{{ download.files[index].buildNumber }})
+              </strong>
+            </a>
+          </div>
         </td>
       </tr>
-    </tbody>
+    </transition-group>
   </table>
 </template>
 
@@ -40,13 +60,42 @@ export default {
 			default: null
 		},
 		downloads: {
-			type: Object,
+			type: Array,
 			default: null
+		},
+		count: {
+			type: Number,
+			default: 10
+		}
+	},
+	computed: {
+		shorterList: function() {
+			if (this.downloads) return this.downloads.slice(0, this.count);
+		}
+	},
+	methods: {
+		dls: function() {
+			return this.downloads.slice(0, 10);
+		},
+		beforeEnter: function(el) {
+			el.style.opacity = 0;
+			el.style.height = 0;
+		},
+		enter: function(el, done) {
+			var delay = el.dataset.index * 150;
+			setTimeout(function() {
+				Velocity(el, { opacity: 1, height: '1.6em' }, { complete: done });
+			}, delay);
+		},
+		leave: function(el, done) {
+			var delay = el.dataset.index * 150;
+			setTimeout(function() {
+				Velocity(el, { opacity: 0, height: 0 }, { complete: done });
+			}, delay);
 		}
 	}
 };
 </script>
-
 
 <style lang="scss" scoped>
 table {

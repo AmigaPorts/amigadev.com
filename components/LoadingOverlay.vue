@@ -4,7 +4,7 @@
     class="amigadev-loading-overlay">
 
     <div class="amigadev-loading-overlay-container">
-      <div><font-awesome-icon :icon="['fal', 'spinner']" /></div>
+      <div><font-awesome-icon :icon="['fas', 'spinner']" /></div>
       <p>{{ text }}</p>
     </div>
 
