@@ -20,6 +20,7 @@
       </div>
       <div class="col-md-12">
         <Downloads
+          v-if="portDownloads !== null"
           :versions="portDownloads.versions"
           :downloads="portDownloads.nightly"
         />
@@ -30,6 +31,7 @@
 
 <script>
 import Downloads from '~/components/Downloads';
+import Download from '~/components/Download';
 import LoadingOverlay from '~/components/LoadingOverlay';
 
 export default {
@@ -48,7 +50,7 @@ export default {
 			title: '',
 			loading: true,
 			port: {},
-			portDownloads: {}
+			portDownloads: null
 		};
 	},
 	mounted() {
@@ -63,9 +65,11 @@ export default {
 			this.loading = false;
 		},
 		async fetchPortDownloads(slug) {
-			this.portDownloads = await this.$axios.$get(
+			const portDownloads = await this.$axios.$get(
 				'/v1/ports/' + slug + '/downloads'
 			);
+
+			this.portDownloads = portDownloads;
 
 			this.loading = false;
 		}

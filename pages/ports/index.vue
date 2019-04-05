@@ -46,14 +46,16 @@ export default {
 	},
 	methods: {
 		async fetchPageInfo() {
-			this.loading = false;
 			//await this.fetchFilters()
-			//await this.fetchProducer(this.$route.params.ports)
+			await this.fetchProducer(this.$route.params.ports);
 		},
 		async fetchProducer(slug) {
-			this.producer = await this.$axios.$get('/v1/producer/' + slug);
-			this.title = this.producer.title + ' - ';
-			this.generateTopProduct(this.producer.topProductId);
+			try {
+				this.producer = await this.$axios.$get('/v1/ports');
+				this.title = this.producer.title + ' - ';
+			} catch (e) {
+				return this.$nuxt.error({ statusCode: 404, message: e });
+			}
 		},
 		async fetchFilters() {
 			let filters = await this.$axios.$get('/v1/search/categories');

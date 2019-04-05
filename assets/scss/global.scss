@@ -27,7 +27,20 @@ body,
 }
 
 main {
+	padding-top: 60px;
+	padding-bottom: 120px;
   flex: 1 0 auto;
+}
+
+a, button {
+	color: #fffec2;
+	transition: color 150ms ease-in-out;
+	text-decoration: none;
+
+	&:hover {
+			color: #33ccff;
+			text-decoration: none;
+	}
 }
 
 h1 {
@@ -151,7 +164,7 @@ p {
 
   &:hover {
     color: inherit;
-    
+
   }
 }
 
@@ -183,7 +196,7 @@ p {
       -ms-animation: rotating 1.5s linear infinite;
       -o-animation: rotating 1.5s linear infinite;
       animation: rotating 1.5s linear infinite;
-      
+
     }
   }
 }
@@ -201,7 +214,7 @@ p {
     -ms-animation: rotating 1.5s linear infinite;
     -o-animation: rotating 1.5s linear infinite;
     animation: rotating 1.5s linear infinite;
-    
+
   }
 }
 

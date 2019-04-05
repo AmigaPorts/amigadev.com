@@ -14,16 +14,28 @@
         <span>AmigaDev</span>
       </li>
       <li class="nav-item text-white ">
-        Home
+        <nuxt-link
+          to="/">
+          Home
+        </nuxt-link>
       </li>
       <li class="nav-item text-white ">
-        Ports
+        <nuxt-link
+          to="/ports">
+          Ports
+        </nuxt-link>
       </li>
       <li class="nav-item text-white ">
-        Members
+        <nuxt-link
+          to="/members">
+          Members
+        </nuxt-link>
       </li>
       <li class="nav-item text-white ">
-        About
+        <nuxt-link
+          to="/about">
+          About
+        </nuxt-link>
       </li>
     </ul>
   </nav>
@@ -32,15 +44,21 @@
 <style lang="scss">
 header {
 	/*background-color: #ffe6598f !important;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);*/
+	position: fixed;
+	width: 100vw;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+
 	nav {
 		z-index: 10000;
 		height: 50px;
-		font-family: Lato;
+		font-family: Raleway;
+		line-height: 34px;
 		.site-title {
-			font-family: 'Oswald', sans-serif;
+			font-family: 'Raleway', sans-serif;
 			font-size: 1.5em;
-			line-height: 1.3em;
 		}
 		input {
 			border-radius: 20px;
@@ -53,9 +71,14 @@ header {
 			li {
 				display: inline-block;
 				padding-right: 2em;
+
 				img {
 					height: 34px;
 					padding-right: 7px;
+				}
+
+				a {
+					line-height: 37px;
 				}
 			}
 		}

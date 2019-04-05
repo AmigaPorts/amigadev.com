@@ -3,7 +3,7 @@
     <header>
       <SiteHeader/>
     </header>
-    <main class="container d-flex justify-content-center">
+    <main class="container d-flex justify-content-center align-items-center">
       <div class="col-md-10">
         <nuxt/>
       </div>

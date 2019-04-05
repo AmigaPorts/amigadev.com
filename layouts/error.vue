@@ -3,16 +3,16 @@
     <h1 class="display-1">{{ error.statusCode }}</h1>
     <div v-if="error.statusCode === 404">
 
-      <h1>Sidan hittades inte</h1>
-      <p>Sidan du försöker komma åt finns inte. Kontrollera att länkadressen är korrekt eller gå tillbaka till startsidan.</p>
+      <h1>Page not found</h1>
+      <p/>
     </div>
     <div v-else>
-      <h1>Hoppsan! Något gick fel</h1>
-      <p>Sidan laddades inte korrekt. Var snäll och gå tillbaka till startsidan och testa igen.</p>
+      <h1>Something went wrong</h1>
+      <p/>
     </div>
 
     <nuxt-link to="/">
-      <button class="btn btn-primary">Tillbaka till startsidan</button>
+      <button class="btn btn-primary">Return to home page...</button>
     </nuxt-link>
   </div>
 </template>

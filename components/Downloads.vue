@@ -1,59 +1,74 @@
 <template>
-  <table id="staggered-list-demo">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th
-          v-for="(version, index) in versions"
-          :key="index">{{ version.ext }}</th>
-      </tr>
-    </thead>
+  <div class="container downloads">
+    <div class="row thead">
+      <div class="col-sm-2 th">Date</div>
+      <div
+        v-for="(version, index) in versions"
+        :key="index"
+        class="col-sm th">{{ version.ext }}</div>
+    </div>
     <transition-group
-      v-if="shorterList"
-      id="files"
+      v-if="downloads"
       :css="false"
       name="staggered-fade"
+      tag="div"
 
-      tag="tbody"
       @before-enter="beforeEnter"
       @enter="enter"
       @leave="leave">
-      <tr
-        v-for="(download, key) in shorterList"
+      <Download
+        v-for="(download, key) in dls"
         :key="download.date"
-        :data-index="key">
-        <td>{{ download.date }}</td>
-        <td
-          v-for="(dl, index) in versions"
-          :key="index">
-          <div v-if="download.files[index]">
-            <a
-              v-if="download.files[index]"
-              :href="download.files[index].link"
-              :title="'Download ' + index"
-              itemprop="downloadUrl">
-              <strong>
-                <i class="far fa-arrow-alt-circle-down"/>
-                {{ download.files[index].modifiedDate }}
-              </strong>
-            </a>
-            <a
-              v-if="download.files[index].buildNumber"
-              :href="download.files[index].buildUrl"
-              :title="'Build number  ' + download.files[index].buildNumber">
-              <strong>
-                (#{{ download.files[index].buildNumber }})
-              </strong>
-            </a>
-          </div>
-        </td>
-      </tr>
+        :test="key"
+        :data-index="key"
+        :date="download.date"
+        :files="download.files"
+        :versions="versions"
+      />
     </transition-group>
-  </table>
+    <div class="row">
+      <template
+        v-if="currentPage == 1">
+        <button
+          class="col-sm-12"
+          @click.prevent="changePage(1)">
+          &laquo; Show more &raquo;
+        </button>
+      </template>
+      <template
+        v-else-if="currentPage > 1 && currentPage != maxPage">
+        <button
+          class="col-sm-6"
+          @click.prevent="changePage(-1)">
+          &laquo; Show less &raquo;
+        </button>
+        <button
+          class="col-sm-6"
+          @click.prevent="changePage(1)">
+          &laquo; Show more &raquo;
+        </button>
+      </template>
+      <template
+        v-else-if="currentPage > 1 && currentPage == maxPage">
+        <button
+          class="col-sm-12"
+          @click.prevent="changePage(-1)">
+          &laquo; Show less &raquo;
+        </button>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script>
+import Download from '~/components/Download';
+import Velocity from 'velocity-animate';
+
 export default {
+	components: {
+		Download,
+		Velocity
+	},
 	props: {
 		versions: {
 			type: Object,
@@ -62,78 +77,134 @@ export default {
 		downloads: {
 			type: Array,
 			default: null
-		},
-		count: {
-			type: Number,
-			default: 10
 		}
 	},
-	computed: {
-		shorterList: function() {
-			if (this.downloads) return this.downloads.slice(0, this.count);
+	data: () => ({
+		dls: [],
+		count: 0,
+		countStep: 10,
+		currentPage: 1,
+		maxPage: 0
+	}),
+	watch: {
+		count(val) {
+			if (this.dls.length !== val) {
+				if (this.count > this.downloads.length)
+					this.dls = this.downloads.slice(0, this.downloads.length);
+				else this.dls = this.downloads.slice(0, this.count);
+			}
+		},
+		downloads: function(_downloads) {
+			this.updateList();
 		}
+	},
+	mounted() {
+		this.count = 10;
+		this.maxPage = Math.ceil(this.countStep / this.downloads.length) + 1;
+		this.updateList();
 	},
 	methods: {
-		dls: function() {
-			return this.downloads.slice(0, 10);
+		async updateList() {
+			this.count = this.countStep * this.currentPage;
+		},
+		changePage: function(num) {
+			this.currentPage += num;
+			if (this.currentPage < 1) this.currentPage = 1;
+			/*
+			if (this.countStep * this.currentPage > this.downloads.length)
+				this.currentPage--;
+
+			console.log((this.countStep * this.currentPage) % this.downloads.length);
+			*/
+
+			this.updateList();
 		},
 		beforeEnter: function(el) {
 			el.style.opacity = 0;
 			el.style.height = 0;
 		},
 		enter: function(el, done) {
-			var delay = el.dataset.index * 150;
+			var index = el.dataset.index;
+			var delay =
+				(index >= this.count - this.countStep
+					? index - this.count - this.countStep
+					: index) * 50;
+
+			console.log(this.maxPage);
 			setTimeout(function() {
-				Velocity(el, { opacity: 1, height: '1.6em' }, { complete: done });
+				Velocity(el, { opacity: 1, height: '30px' }, { complete: done });
 			}, delay);
 		},
 		leave: function(el, done) {
-			var delay = el.dataset.index * 150;
+			var index = el.dataset.index;
+			var delay =
+				(index >= this.count - this.countStep
+					? index - this.count - this.countStep
+					: index) * 50;
+
 			setTimeout(function() {
 				Velocity(el, { opacity: 0, height: 0 }, { complete: done });
 			}, delay);
+		},
+		created() {
+			this.count = 10;
+			this.updateList();
 		}
 	}
 };
 </script>
 
-<style lang="scss" scoped>
-table {
+<style lang="scss">
+.container.downloads {
 	border-spacing: 0px 0px;
 	width: 100%;
 	text-align: left;
 	box-shadow: 0px 5px 7px 0px #00000080;
-	tr {
+	.row {
 		height: 30px;
+		overflow: hidden;
+
+		button {
+			border: 1px solid #ffffff44;
+
+			background-color: #202020;
+			&:hover {
+				/**/
+			}
+		}
 
 		&:nth-child(even) {
+			background-color: #202020;
+		}
+		&:nth-child(odd) {
 			background-color: rgba(109, 120, 156, 0.21);
 		}
-		td:first-child,
-		th:first-child {
-			padding-left: 5px;
-		}
-		td:last-child,
-		th:last-child {
-			padding-right: 0px;
-		}
-		th {
-			border-bottom: 3px solid #6e799c;
-			line-height: 2em;
-			font-size: 1.2em;
-			margin-bottom: 10px;
-		}
-		td {
-			line-height: 1.5em;
+
+		div[class^='col-'],
+		div[class*=' col-'] {
+			line-height: 30px;
 			font-size: 0.9em;
-			font-family: 'Lato' !important;
+			font-family: 'Lato';
 
-			a {
-				color: #f0bc02;
+			&:first-child {
+				padding-left: 5px;
+			}
 
-				&:hover {
-					color: #997800;
-				}
+			&:last-child {
+				padding-right: 0px;
+			}
+		}
+
+		&.thead {
+			background-color: #202020;
+			border-bottom: 3px solid #6e799c;
+
+			div[class^='col-'],
+			div[class*=' col-'] {
+				font-family: Oswald, sans-serif;
+				line-height: 30px;
+				font-size: 1em;
+				margin-bottom: 10px;
 			}
 		}
 	}

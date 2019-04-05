@@ -72,7 +72,7 @@ import Breadcrumbs from '~/components/Breadcrumbs';
 import LoadingOverlay from '~/components/LoadingOverlay';
 
 export default {
-	auth: true,
+	auth: false,
 	components: {
 		Breadcrumbs,
 		LoadingOverlay
@@ -94,10 +94,14 @@ export default {
 	},
 	methods: {
 		async fetchProduct(slug) {
-			const page = await this.$axios.$get('/v1/pages/' + slug);
-			this.page = page;
-			this.title = page.post_title + ' :: ';
-			this.loading = false;
+			try {
+				const page = await this.$axios.$get('/v1/pages/' + slug);
+				this.page = page;
+				this.title = page.post_title + ' :: ';
+				this.loading = false;
+			} catch (e) {
+				return this.$nuxt.error({ statusCode: 404, message: e });
+			}
 		}
 	}
 };
