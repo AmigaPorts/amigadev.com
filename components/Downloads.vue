@@ -26,9 +26,11 @@
         :versions="versions"
       />
     </transition-group>
-    <div class="row">
+    <div
+      v-if="maxPage > 1"
+      class="row">
       <template
-        v-if="currentPage == 1">
+        v-if="currentPage == 1 && maxPage > 1">
         <button
           class="col-sm-12"
           @click.prevent="changePage(1)">
@@ -36,7 +38,7 @@
         </button>
       </template>
       <template
-        v-else-if="currentPage > 1 && currentPage != maxPage">
+        v-else-if="currentPage > 1 && currentPage != maxPage && maxPage > 1">
         <button
           class="col-sm-6"
           @click.prevent="changePage(-1)">
@@ -49,13 +51,15 @@
         </button>
       </template>
       <template
-        v-else-if="currentPage > 1 && currentPage == maxPage">
+        v-else-if="currentPage > 1 && currentPage == maxPage && maxPage > 1">
         <button
           class="col-sm-12"
           @click.prevent="changePage(-1)">
           &laquo; Show less &raquo;
         </button>
       </template>
+      <template
+        v-else-if="maxPage == 1"/>
     </div>
   </div>
 </template>
@@ -100,7 +104,7 @@ export default {
 	},
 	mounted() {
 		this.count = 10;
-		this.maxPage = Math.ceil(this.countStep / this.downloads.length) + 1;
+		this.maxPage = Math.ceil(this.downloads.length / this.countStep);
 		this.updateList();
 	},
 	methods: {
@@ -128,7 +132,7 @@ export default {
 			var delay =
 				(index >= this.count - this.countStep
 					? index - this.count - this.countStep
-					: index) * 50;
+					: index) * 150;
 
 			console.log(this.maxPage);
 			setTimeout(function() {

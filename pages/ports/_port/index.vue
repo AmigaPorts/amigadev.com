@@ -1,24 +1,35 @@
 <template>
-  <div>
-    <LoadingOverlay
-      :text="'Loading...'"
-      :show="loading"/>
-    <img
-      :src="port.imageUrl"
-      class="w-100 d-md-none amigadev-port-image"
-      alt="field">
+  <section>
     <div class="row justify-content-center">
       <div class="col-md-12">
-        <img
-          :src="port.topImage"
-          class="pt-md-3 w-50 amigadev-port-image"
-          alt="field">
-        <h1 class="pt-md-3 m-md-0">{{ port.title }}</h1>
-        <p
-          class="font-size-18"
-          v-html="port.description"/>
+        <template
+          v-if="loading">
+          <Loading
+            :text="'Loading port data...'"
+            :show="loading"/>
+        </template>
+        <template v-else>
+          <img
+            :src="port.topImage"
+            class="pt-md-3 w-50 amigadev-port-image"
+            alt="field">
+          <h1 class="pt-md-3 m-md-0">{{ port.title }}</h1>
+          <p
+            class="font-size-18"
+            v-html="port.description"/>
+        </template>
       </div>
-      <div class="col-md-12">
+      <div
+        v-if="portDownloads == null"
+        class="col-md-12">
+        <Loading
+          :text="'Loading nightlies...'"
+          :show="loading"/>
+      </div>
+      <div
+        v-else
+        class="col-md-12">
+        <h2>Nightly Builds</h2>
         <Downloads
           v-if="portDownloads !== null"
           :versions="portDownloads.versions"
@@ -26,19 +37,19 @@
         />
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import Downloads from '~/components/Downloads';
 import Download from '~/components/Download';
-import LoadingOverlay from '~/components/LoadingOverlay';
+import Loading from '~/components/Loading';
 
 export default {
 	auth: false,
 	components: {
 		Downloads,
-		LoadingOverlay
+		Loading
 	},
 	head() {
 		return {
@@ -70,8 +81,6 @@ export default {
 			);
 
 			this.portDownloads = portDownloads;
-
-			this.loading = false;
 		}
 	}
 };

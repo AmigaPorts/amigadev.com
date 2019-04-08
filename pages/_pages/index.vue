@@ -1,16 +1,9 @@
 <template>
-  <div>
+  <section>
     <LoadingOverlay
       :text="'Loading...'"
       :show="loading"/>
     <div class="container">
-      <Breadcrumbs
-        :type="'page'"
-        :product-name="page.post_title"
-        :product-slug="page.slug"
-        :producer-name="page.parentTitle"
-        :producer-slug="page.parentSlug"
-      />
       <div class="row">
         <div class="col-md p-0">
           <div class="px-4 pb-4">
@@ -22,49 +15,13 @@
               </div>
             </nuxt-link>
             <p class="font-size-18">{{ page.shortInformation }}</p>
-            <div class="font-size-12 pl-4 mb-4 amigadev-product-content-container">
-              <div class="row">
-                <div class="col-6">
-                  <p class="mb-0">
-                    <strong>Innehåll:</strong>
-                    {{ page.contents }}
-                  </p>
-                </div>
-                <div class="col-6">
-                  <p class="mb-1">
-                    <strong>Atrikelnummer:</strong>
-                    {{ page.itemNumber }}
-                  </p>
-                  <p class="mb-1">
-                    <strong>Minsta beställning:</strong>
-                    {{ page.minimumOrder }}
-                  </p>
-                  <p class="mb-0">
-                    <strong>Vikt:</strong>
-                    {{ page.weight }}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <nuxt-link :to="'/' + page.parentSlug + '#contact'">
-              <button class="btn btn-primary">Kontakta producent</button>
-            </nuxt-link>
           </div>
-        </div>
-        <div class="col-md p-0">
-          <img
-            :src="page.imageUrl"
-            class="w-100 pt-md-3 d-none d-md-block amigadev-product-image"
-            alt="field"
-          >
-          <div class="px-4 pb-4 p-md-0 pt-md-4">
-            <h5>Utökad information</h5>
-            <p class="font-size-12">{{ page.extendedInformation }}</p>
-          </div>
+          <div
+            :v-html="page.post_content"
+            class="col-md p-0"/>
         </div>
       </div>
-    </div>
-  </div>
+  </div></section>
 </template>
 
 <script>

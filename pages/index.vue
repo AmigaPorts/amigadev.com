@@ -4,7 +4,7 @@
       :text="'Loading...'"
       :show="loading"/>
     <div
-      class="w-100 vh-100 d-flex justify-content-center align-items-center flex-column">
+      class="d-flex justify-content-center align-items-center flex-column">
       <img
         :src="landing.logo"
         class="amigadev-landing-round-logo"
