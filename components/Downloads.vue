@@ -113,13 +113,13 @@ export default {
 			this.updateList();
 		}
 	},
-	mounted() {
+	mounted: function() {
 		this.count = 10;
 		this.maxPage = Math.ceil(this.downloads.length / this.countStep);
 		this.updateList();
 	},
 	methods: {
-		async updateList() {
+		updateList: async function() {
 			this.count = this.countStep * this.currentPage;
 		},
 		changePage: function(num) {
@@ -161,7 +161,7 @@ export default {
 				Velocity(el, { opacity: 0, height: 0 }, { complete: done });
 			}, delay);
 		},
-		created() {
+		created: function() {
 			this.count = 10;
 			this.updateList();
 		}
