@@ -92,7 +92,6 @@ export default {
 	}),
 	watch: {
 		count(val) {
-			//if (this.dls.length !== val) {
 			var min =
 				this.count - this.countStep < 1 ? 0 : this.count - this.countStep;
 			if (this.count > this.downloads.length) {
@@ -101,9 +100,16 @@ export default {
 				this.dls = this.downloads.slice(min, this.count);
 				console.log(min + ' ' + this.count);
 			}
-			//}
 		},
 		downloads: function(_downloads) {
+			var min =
+				this.count - this.countStep < 1 ? 0 : this.count - this.countStep;
+			if (this.count > this.downloads.length) {
+				this.dls = this.downloads.slice(min, this.downloads.length);
+			} else {
+				this.dls = this.downloads.slice(min, this.count);
+				console.log(min + ' ' + this.count);
+			}
 			this.updateList();
 		}
 	},
