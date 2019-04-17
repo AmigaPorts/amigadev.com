@@ -34,7 +34,7 @@
         <button
           class="col-sm-12"
           @click.prevent="changePage(1)">
-          &laquo; Show more &raquo;
+          Show older &raquo;
         </button>
       </template>
       <template
@@ -42,12 +42,12 @@
         <button
           class="col-sm-6"
           @click.prevent="changePage(-1)">
-          &laquo; Show less &raquo;
+          &laquo; Show newer
         </button>
         <button
           class="col-sm-6"
           @click.prevent="changePage(1)">
-          &laquo; Show more &raquo;
+          Show older &raquo;
         </button>
       </template>
       <template
@@ -55,7 +55,7 @@
         <button
           class="col-sm-12"
           @click.prevent="changePage(-1)">
-          &laquo; Show less &raquo;
+          &laquo; Show newer
         </button>
       </template>
       <template
@@ -96,23 +96,34 @@ export default {
 	}),
 	watch: {
 		count(val) {
-			if (this.dls.length !== val) {
-				if (this.count > this.downloads.length)
-					this.dls = this.downloads.slice(0, this.downloads.length);
-				else this.dls = this.downloads.slice(0, this.count);
+			var min =
+				this.count - this.countStep < 1 ? 0 : this.count - this.countStep;
+			if (this.count > this.downloads.length) {
+				this.dls = this.downloads.slice(min, this.downloads.length);
+			} else {
+				this.dls = this.downloads.slice(min, this.count);
+				console.log(min + ' ' + this.count);
 			}
 		},
 		downloads: function(_downloads) {
+			var min =
+				this.count - this.countStep < 1 ? 0 : this.count - this.countStep;
+			if (this.count > this.downloads.length) {
+				this.dls = this.downloads.slice(min, this.downloads.length);
+			} else {
+				this.dls = this.downloads.slice(min, this.count);
+				console.log(min + ' ' + this.count);
+			}
 			this.updateList();
 		}
 	},
-	mounted() {
+	mounted: function() {
 		this.count = 10;
 		this.maxPage = Math.ceil(this.downloads.length / this.countStep);
 		this.updateList();
 	},
 	methods: {
-		async updateList() {
+		updateList: async function() {
 			this.count = this.countStep * this.currentPage;
 		},
 		changePage: function(num) {
@@ -136,7 +147,7 @@ export default {
 			var delay =
 				(index >= this.count - this.countStep
 					? index - this.count - this.countStep
-					: index) * 150;
+					: index) * 50;
 
 			console.log(this.maxPage);
 			setTimeout(function() {
@@ -154,7 +165,7 @@ export default {
 				Velocity(el, { opacity: 0, height: 0 }, { complete: done });
 			}, delay);
 		},
-		created() {
+		created: function() {
 			this.count = 10;
 			this.updateList();
 		}
@@ -176,9 +187,6 @@ export default {
 			border: 1px solid #ffffff44;
 
 			background-color: #202020;
-			&:hover {
-				/**/
-			}
 		}
 
 		&:nth-child(even) {

@@ -1,11 +1,12 @@
 <template>
   <section>
     <div class="row justify-content-center">
-      <div class="col-md-12 mb-4">
-        <template v-if="loading">
+      <div class="col-md-12">
+        <template
+          v-if="port === null">
           <Loading
             :text="'Loading port data...'"
-            :show="loading"/>
+            :show="port === null"/>
         </template>
         <template v-else>
           <img
@@ -42,7 +43,7 @@
         class="col-md-12">
         <Loading
           :text="'Loading nightlies...'"
-          :show="loading"/>
+          :show="portDownloads === null"/>
       </div>
       <div
         v-else
@@ -79,20 +80,27 @@ export default {
 		return {
 			title: '',
 			loading: true,
-			port: {},
+			port: null,
 			portDownloads: null
 		};
 	},
 	mounted() {
 		this.fetchPort(this.$route.params.port);
 		this.fetchPortDownloads(this.$route.params.port);
+		setInterval(() => {
+			this.fetchPortDownloads(this.$route.params.port);
+		}, 5000);
 	},
 	methods: {
 		async fetchPort(slug) {
-			this.port = await this.$axios.$get('/v1/ports/' + slug);
+			try {
+				this.port = await this.$axios.$get('/v1/ports/' + slug);
 
-			this.title = this.port.title + ' :: ';
-			this.loading = false;
+				this.title = this.port.title + ' :: ';
+				this.loading = false;
+			} catch (e) {
+				return this.$nuxt.error({ statusCode: 404, message: e });
+			}
 		},
 		async fetchPortDownloads(slug) {
 			const portDownloads = await this.$axios.$get(
