@@ -1,7 +1,7 @@
 <template>
   <div class="container downloads">
     <div class="row thead">
-      <div class="col-sm-2 th">Date</div>
+      <div class="col-sm-2 th">{{ version_string }}</div>
       <div
         v-for="(version, index) in versions"
         :key="index"
@@ -81,6 +81,10 @@ export default {
 		downloads: {
 			type: Array,
 			default: null
+		},
+		version_string: {
+			type: String,
+			default: 'Date'
 		}
 	},
 	data: () => ({
@@ -178,10 +182,10 @@ export default {
 		}
 
 		&:nth-child(even) {
-			background-color: #202020;
+			background-color: rgba(74, 81, 104, 0.21);
 		}
 		&:nth-child(odd) {
-			background-color: rgba(109, 120, 156, 0.21);
+			background-color: rgba(132, 145, 189, 0.21);
 		}
 
 		div[class^='col-'],
@@ -200,7 +204,7 @@ export default {
 		}
 
 		&.thead {
-			background-color: #202020;
+			background-color: rgba(74, 81, 104, 0.21);
 			border-bottom: 3px solid #6e799c;
 
 			div[class^='col-'],

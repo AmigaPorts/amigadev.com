@@ -1,9 +1,8 @@
 <template>
   <section>
     <div class="row justify-content-center">
-      <div class="col-md-12">
-        <template
-          v-if="loading">
+      <div class="col-md-12 mb-4">
+        <template v-if="loading">
           <Loading
             :text="'Loading port data...'"
             :show="loading"/>
@@ -23,6 +22,25 @@
         v-if="portDownloads == null"
         class="col-md-12">
         <Loading
+          :text="'Loading releases...'"
+          :show="loading"/>
+      </div>
+      <div
+        v-else
+        class="col-md-12 mb-4">
+        <h2>Release Builds</h2>
+        <Downloads
+          v-if="portDownloads !== null && portDownloads.releases.length > 0"
+          :versions="portDownloads.versions"
+          :downloads="portDownloads.releases"
+          version_string="Version"
+        />
+        <span v-else>No release builds available...</span>
+      </div>
+      <div
+        v-if="portDownloads == null"
+        class="col-md-12">
+        <Loading
           :text="'Loading nightlies...'"
           :show="loading"/>
       </div>
@@ -31,9 +49,10 @@
         class="col-md-12">
         <h2>Nightly Builds</h2>
         <Downloads
-          v-if="portDownloads !== null"
+          v-if="portDownloads !== null && portDownloads.nightly.length > 0"
           :versions="portDownloads.versions"
           :downloads="portDownloads.nightly"
+          version_string="Date"
         />
       </div>
     </div>
