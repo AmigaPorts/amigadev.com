@@ -24,7 +24,7 @@
         class="col-md-12">
         <Loading
           :text="'Loading releases...'"
-          :show="loading"/>
+          :show="portDownloads === null"/>
       </div>
       <div
         v-else
