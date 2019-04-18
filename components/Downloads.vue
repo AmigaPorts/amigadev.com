@@ -145,7 +145,7 @@ export default {
 		enter: function(el, done) {
 			var index = el.dataset.index;
 			var delay =
-				(index >= this.count - this.countStep
+				(index >= this.countStep
 					? index - this.count - this.countStep
 					: index) * 50;
 
@@ -157,7 +157,7 @@ export default {
 		leave: function(el, done) {
 			var index = el.dataset.index;
 			var delay =
-				(index >= this.count - this.countStep
+				(index >= this.countStep
 					? index - this.count - this.countStep
 					: index) * 50;
 
