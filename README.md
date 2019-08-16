@@ -1,6 +1,6 @@
-# amigadev-frontend
+# Amigadev.com
 
-> Frontend application for Amigadev.com
+Frontend application for Amigadev.com
 
 ## Build Setup
 
@@ -12,7 +12,7 @@ $ npm install
 $ npm run dev
 
 # build for production and launch server
-$ npm run build
+$ npm run build-production
 $ npm start
 
 # generate static project
