@@ -1,6 +1,6 @@
 # amigadev-frontend
 
-> Frontend application for Västernorrlandsgården (amigadev)
+> Frontend application for Amigadev.com
 
 ## Build Setup
 
