@@ -150,7 +150,7 @@ export default {
 						'Din registrering har nu skickats in. Västernorrlandsgården kommer inom kort godkänna din registrering.';
 					this.clearFields();
 				} catch (e) {
-					console.log('Something went wrong: ', e);
+					//console.log('Something went wrong: ', e);
 					this.repsponseMessage = 'Något gick fel. Var vänlig försök igen.';
 				}
 			} else {

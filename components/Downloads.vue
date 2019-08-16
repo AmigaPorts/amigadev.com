@@ -102,7 +102,7 @@ export default {
 				this.dls = this.downloads.slice(min, this.downloads.length);
 			} else {
 				this.dls = this.downloads.slice(min, this.count);
-				console.log(min + ' ' + this.count);
+				//console.log(min + ' ' + this.count);
 			}
 		},
 		downloads: function(_downloads) {
@@ -112,7 +112,7 @@ export default {
 				this.dls = this.downloads.slice(min, this.downloads.length);
 			} else {
 				this.dls = this.downloads.slice(min, this.count);
-				console.log(min + ' ' + this.count);
+				//console.log(min + ' ' + this.count);
 			}
 			this.updateList();
 		}
@@ -149,7 +149,7 @@ export default {
 					? index - this.count - this.countStep
 					: index) * 50;
 
-			console.log(this.maxPage);
+			//console.log(this.maxPage);
 			setTimeout(function() {
 				Velocity(el, { opacity: 1, height: '30px' }, { complete: done });
 			}, delay);
