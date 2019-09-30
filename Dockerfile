@@ -13,14 +13,13 @@ WORKDIR /usr/src/app
 
 # Install dependencies
 COPY package.json .
-COPY .npmrc .
-RUN yarn
+RUN npm install
 
 # Copy source to container and build
 COPY . .
-RUN yarn build-staging
+RUN npm run build-staging
 
 # Start app
-CMD yarn staging
+CMD npm run staging
 
 EXPOSE 80
