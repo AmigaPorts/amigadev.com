@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="show"
+    v-if="show"
     class="amigadev-loading-overlay">
 
     <div class="amigadev-loading-overlay-container">

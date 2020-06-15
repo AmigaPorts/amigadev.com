@@ -37,6 +37,12 @@
           About
         </nuxt-link>
       </li>
+      <li class="nav-item text-white ">
+        <nuxt-link
+          to="/hardware/test">
+          hardware/test
+        </nuxt-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -50,6 +56,8 @@ header {
 	top: 0px;
 	left: 0px;
 	right: 0px;
+	z-index: 1000;
+	background-color: #202020b5;
 
 	nav {
 		z-index: 10000;

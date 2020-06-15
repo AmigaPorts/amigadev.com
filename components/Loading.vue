@@ -1,10 +1,10 @@
 <template>
   <div
-    v-show="show" >
+    v-if="show" >
 
     <div class="amigadev-loading-container">
       <div><font-awesome-icon :icon="['fas', 'spinner']" /></div>
-      <p>{{ text }}</p>
+      <p v-if="text">{{ text }}</p>
     </div>
 
   </div>

@@ -3,10 +3,12 @@ FROM node:10-alpine
 # Build arguments
 
 # Required build arguments
+ARG BUILDENV
 
 # Environment variables
 ENV HOST 0.0.0.0
 ENV PORT 80
+ENV BUILDENV ${BUILDENV}
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -17,9 +19,11 @@ RUN npm install
 
 # Copy source to container and build
 COPY . .
-RUN npm run build-staging
+
+RUN echo "Building environment: ${BUILDENV}"
+RUN npm run build-${BUILDENV}
 
 # Start app
-CMD npm run staging
+CMD npm run $BUILDENV
 
 EXPOSE 80
