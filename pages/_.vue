@@ -17,14 +17,12 @@
 
 <script>
 import Loading from '~/components/Loading';
-import LoadingOverlay from '~/components/LoadingOverlay';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	auth: false,
 	components: {
-		Loading,
-		LoadingOverlay
+		Loading
 	},
 	computed: {
 		landing() {
@@ -56,15 +54,6 @@ export default {
 			'ghpages/get',
 			params.pathMatch == '' ? 'README' : params.pathMatch
 		);
-		if (process.server) {
-			console.log('ssr');
-
-			try {
-				// asd
-			} catch (err) {
-				console.log(err);
-			}
-		}
 	},
 	async asyncData({ error, app, env, store, params }) {
 		return {
