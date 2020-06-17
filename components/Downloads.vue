@@ -68,12 +68,10 @@
 
 <script>
 import Download from '~/components/Download';
-import Velocity from 'velocity-animate';
 
 export default {
 	components: {
-		Download,
-		Velocity
+		Download
 	},
 	props: {
 		versions: {

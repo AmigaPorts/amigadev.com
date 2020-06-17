@@ -1,15 +1,15 @@
 <template>
   <footer class="text-white bg-primary">
-    <div class="container mb-5 mb-md-0">
-      <div class="row">
+    <div
+      class="container justify-content-center">
+      <div
+        class="col-md-10 d-none d-flex flex-row justify-content-start align-items-center">
         <div class="col-md">
           <div>
             <img
               src="/amigadev-logo-green.png"
               alt="AmigaDev logotype">
           </div>
-          <p>Org.nr {{ organization_number }}</p>
-          <p>Postadress: {{ postal_address }}</p>
         </div>
         <div class="col-md mt-2">
           <Invite v-if="isAuthenticated"/>
@@ -41,8 +41,6 @@ export default {
 	},
 	data() {
 		return {
-			organization_number: 'Laddar organisationsnummer...',
-			postal_address: 'Laddar adress...',
 			social_links: []
 		};
 	},
@@ -55,8 +53,6 @@ export default {
 	methods: {
 		async fetchSiteInfo() {
 			const site_info = await this.$axios.$get('/v1/site-info');
-			this.organization_number = site_info.organization_number;
-			this.postal_address = site_info.postal_address;
 			this.social_links = site_info.social_links;
 		}
 	}

@@ -17,7 +17,7 @@ const metaData = {
 const headerData = {
 	title: metaData.ogTitle,
 	htmlAttrs: {
-		lang: 'sv'
+		lang: 'en'
 	},
 	meta: [
 		{ charset: 'utf-8' },
