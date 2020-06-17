@@ -6,7 +6,7 @@
           <div>
             <img
               src="/amigadev-logo-green.png"
-              alt="Västernorrlandsgården logotyp">
+              alt="AmigaDev logotype">
           </div>
           <p>Org.nr {{ organization_number }}</p>
           <p>Postadress: {{ postal_address }}</p>
