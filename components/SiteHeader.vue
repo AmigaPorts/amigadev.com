@@ -37,12 +37,6 @@
           About
         </nuxt-link>
       </li>
-      <li class="nav-item text-white ">
-        <nuxt-link
-          to="/ports/MilkyTracker">
-          MilkyTracker
-        </nuxt-link>
-      </li>
     </ul>
   </nav>
 </template>
