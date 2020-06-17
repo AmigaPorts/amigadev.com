@@ -39,8 +39,8 @@
       </li>
       <li class="nav-item text-white ">
         <nuxt-link
-          to="/hardware/test">
-          hardware/test
+          to="/ports/MilkyTracker">
+          MilkyTracker
         </nuxt-link>
       </li>
     </ul>
