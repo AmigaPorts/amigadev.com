@@ -23,32 +23,32 @@ export default {
 	components: {
 		LoadingOverlay
 	},
-	data() {
+	async asyncData({ error, app, env, store }) {
+		let landing = [];
+		let loading = true;
+		let ssr = process.server;
+
+		if (ssr) {
+			landing = fetchLandingInfo();
+		}
+
 		return {
-			loading: true,
-			landing: {
-				producers: [
-					{
-						imageUrl: ''
-					},
-					{
-						imageUrl: ''
-					},
-					{
-						imageUrl: ''
-					}
-				]
-			}
+			landing: landing,
+			loading: loading,
+			ssr: ssr
 		};
 	},
-	mounted() {
-		this.fetchLandingInfo();
+	created() {
+		if (!this.ssr) {
+			this.landing = this.fetchLandingInfo();
+		}
 	},
 	methods: {
-		async fetchLandingInfo() {
+		fetchLandingInfo: async function() {
 			const landing = await this.$axios.$get('/v1/page/landing');
-			this.landing = landing;
 			this.loading = false;
+
+			return landing;
 		}
 	}
 };

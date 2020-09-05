@@ -1,7 +1,7 @@
 <template>
   <div class="container downloads">
     <div class="row thead">
-      <div class="col-sm-2 th">{{ version_string }}</div>
+      <div class="col-sm-2 th">{{ 'version_string' }}</div>
       <div
         v-for="(version, index) in versions"
         :key="index"
@@ -59,7 +59,7 @@
         </button>
       </template>
       <template
-        v-else-if="maxPage == 1"/>
+        v-else-if="maxPage === 1"/>
     </div>
   </div>
 </template>

@@ -34,7 +34,7 @@
           v-if="portDownloads !== null && portDownloads.releases.length > 0"
           :versions="portDownloads.versions"
           :downloads="portDownloads.releases"
-          version_string="Version"
+          :version_string="Version"
         />
         <span v-else>No release builds available...</span>
       </div>

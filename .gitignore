@@ -80,3 +80,9 @@ dist
 # IDE
 .idea
 vendor/
+
+# PWA
+sw.*
+
+# Testpages
+pages/test*.vue
