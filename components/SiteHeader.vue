@@ -50,6 +50,8 @@ header {
 	top: 0px;
 	left: 0px;
 	right: 0px;
+	z-index: 1000;
+	background-color: #202020b5;
 
 	nav {
 		z-index: 10000;

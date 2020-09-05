@@ -1,7 +1,7 @@
 <template>
   <div class="container downloads">
     <div class="row thead">
-      <div class="col-sm-2 th">{{ 'version_string' }}</div>
+      <div class="col-sm-2 th">{{ version_string }}</div>
       <div
         v-for="(version, index) in versions"
         :key="index"
@@ -59,19 +59,19 @@
         </button>
       </template>
       <template
-        v-else-if="maxPage === 1"/>
+        v-else-if="maxPage === 1">
+        <span class="hide"/>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import Download from '~/components/Download';
-import Velocity from 'velocity-animate';
 
 export default {
 	components: {
-		Download,
-		Velocity
+		Download
 	},
 	props: {
 		versions: {
@@ -143,26 +143,28 @@ export default {
 			el.style.height = 0;
 		},
 		enter: function(el, done) {
-			var index = el.dataset.index;
-			var delay =
+			let index = el.dataset.index;
+			let delay =
 				(index >= this.countStep
 					? index - this.count - this.countStep
 					: index) * 50;
 
 			//console.log(this.maxPage);
 			setTimeout(function() {
-				Velocity(el, { opacity: 1, height: '30px' }, { complete: done });
+				if (!process.server)
+					Velocity(el, { opacity: 1, height: '30px' }, { complete: done });
 			}, delay);
 		},
 		leave: function(el, done) {
-			var index = el.dataset.index;
-			var delay =
+			let index = el.dataset.index;
+			let delay =
 				(index >= this.countStep
 					? index - this.count - this.countStep
 					: index) * 50;
 
 			setTimeout(function() {
-				Velocity(el, { opacity: 0, height: 0 }, { complete: done });
+				if (!process.server)
+					Velocity(el, { opacity: 0, height: 0 }, { complete: done });
 			}, delay);
 		},
 		created: function() {

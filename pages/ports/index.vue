@@ -1,82 +1,58 @@
 <template>
   <div>
-    <LoadingOverlay
+    <Loading
       :text="'Loading ports...'"
-      :show="loading"/>
-
+      :show="!landing"/>
+    <div v-if="landing">
+      <Port
+        :landing="landing.software"
+        name="Software"/>
+      <Port
+        :landing="landing.script"
+        name="Tools"/>
+      <Port
+        :landing="landing.hardware"
+        name="Hardware"/>
+    </div>
   </div>
 </template>
 
 <script>
-import Downloads from '~/components/Downloads';
-import Breadcrumbs from '~/components/Breadcrumbs';
-import LoadingOverlay from '~/components/LoadingOverlay';
+import Loading from '~/components/Loading';
+import Port from '~/components/Port';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	auth: false,
 	components: {
-		Downloads,
-		Breadcrumbs,
-		LoadingOverlay
+		Loading,
+		Port
 	},
-	head() {
-		return {
-			title: this.title + 'AmigaDev'
-		};
+	computed: {
+		landing() {
+			return this.$store.state.ports.data;
+		},
+		...mapGetters('ports', {
+			getPageBySlug: 'getPageBySlug'
+		})
 	},
-	data() {
-		return {
-			title: 'Ports :: ',
-			loading: true,
-			filters: null,
-			topProductImageUrl: '',
-			topProductTitle: '',
-			topProductShortInformation: '',
-			topProductSlug: '',
-			topProductCategory: '',
-			producer: {
-				topProductId: 0,
-				products: {},
-				posts: []
-			}
-		};
-	},
-	mounted() {
-		this.fetchPageInfo();
+	async created() {
+		if (this.ssr) {
+			await this.$store.commit('ports/runtimeApiUrl', process.env.API_BASE_URL);
+		}
 	},
 	methods: {
-		async fetchPageInfo() {
-			//await this.fetchFilters()
-			await this.fetchProducer(this.$route.params.ports);
-		},
-		async fetchProducer(slug) {
-			try {
-				this.producer = await this.$axios.$get('/v1/ports');
-				this.title = this.producer.title + ' - ';
-			} catch (e) {
-				return this.$nuxt.error({ statusCode: 404, message: e });
-			}
-		},
-		async fetchFilters() {
-			let filters = await this.$axios.$get('/v1/search/categories');
-			for (let filter in filters) {
-				filters[filter].name = filters[filter].name.replace('&amp;', '&');
-			}
-			this.filters = filters;
-		},
-		generateTopProduct(id) {
-			this.topProductImageUrl = this.producer.products[id].imageUrl;
-			this.topProductTitle = this.producer.products[id].title;
-			this.topProductShortInformation = this.producer.products[
-				id
-			].shortInformation;
-			this.topProductSlug = this.producer.products[id].slug;
-			this.topProductCategory = this.filters[
-				this.producer.products[id].categories[0]
-			].name;
-
-			this.loading = false;
-		}
+		...mapActions({
+			get: 'ports/get'
+		})
+	},
+	async fetch({ error, store, params }) {
+		await store.dispatch('ports/get');
+	},
+	async asyncData({ error, app, env, store, params }) {
+		return {
+			ssr: process.server
+		};
 	}
 };
 </script>

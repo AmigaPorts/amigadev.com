@@ -28,10 +28,41 @@ body,
 
 main {
 	padding-top: 60px;
-	padding-bottom: 120px;
+	/*padding-bottom: 120px;*/
   flex: 1 0 auto;
 }
 
+.hljs {
+	background: #322929a1 !important;
+
+	border-radius: 4px;
+	border: 1px rgba(255,255,255,0.34902) solid;
+}
+table {
+	border-spacing: 0px 0px;
+	width: 100%;
+	text-align: left;
+	box-shadow: 0px 5px 7px 0px #00000080;
+	tr{
+		height: 30px;
+		&:nth-child(even) {
+			background-color: #424242;
+		}
+		&:nth-child(odd) {
+			background-color: #2e2e2e;
+		}
+	}
+
+	tr td:first-child, tr th:first-child {
+		padding-left: 5px;
+	}
+
+	td {
+		line-height: 1.5em;
+		font-size: 0.9em;
+		font-family: 'Lato' !important;
+	}
+}
 a, button {
 	color: #fffec2;
 	transition: color 150ms ease-in-out;

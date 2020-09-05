@@ -1,0 +1,18 @@
+{
+    "builds": [
+        {
+            "DockerRoot": "amigadev",
+            "DockerImage": "amigadev.com",
+            "DockerTag": "production",
+            "Dockerfile": "Dockerfile",
+            "BuildIfSuccessful": ""
+        },
+        {
+            "DockerRoot": "amigadev",
+			"DockerImage": "amigadev.com",
+			"DockerTag": "staging",
+			"Dockerfile": "Dockerfile",
+            "BuildIfSuccessful": ""
+        }
+    ]
+}

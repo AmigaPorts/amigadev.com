@@ -3,7 +3,7 @@ require('dotenv').config({
 	path: 'environments/' + process.env.NODE_ENV + '.env'
 });
 
-var metaData = {
+const metaData = {
 	siteName: process.env.SITE_NAME,
 	author: process.env.AUTHOR,
 	ogUrl: process.env.DEFAULT_URL,
@@ -14,10 +14,10 @@ var metaData = {
 	twitterSite: process.env.TWITTER_SITE
 };
 
-var headerData = {
+const headerData = {
 	title: metaData.ogTitle,
 	htmlAttrs: {
-		lang: 'sv'
+		lang: 'en'
 	},
 	meta: [
 		{ charset: 'utf-8' },
@@ -98,7 +98,10 @@ module.exports = {
 	/*
   ** Global CSS
   */
-	css: ['@/assets/scss/app.scss'],
+	css: [
+		'@/assets/scss/app.scss',
+		{ src: '~/node_modules/highlight.js/styles/hopscotch.css', lang: 'css' }
+	],
 
 	/*
   ** Plugins to load before mounting the App
@@ -115,7 +118,12 @@ module.exports = {
   */
 	modules: [
 		// Doc: https://github.com/nuxt-community/axios-module#usage
-		'@nuxtjs/axios',
+		[
+			'@nuxtjs/axios',
+			{
+				baseURL: process.env.API_BASE_URL
+			}
+		],
 		'@nuxtjs/auth',
 		'@nuxtjs/pwa',
 		'@nuxtjs/markdownit',
@@ -136,11 +144,12 @@ module.exports = {
 		middleware: ['auth']
 	},
 	markdownit: {
-		injected: true
+		injected: true,
+		preset: 'default',
+		linkify: true,
+		breaks: true,
+		use: ['markdown-it-highlightjs', 'markdown-it-task-lists']
 	},
-	/*
-	** Nuxt.js pwa options
-	*/
 	pwa: {
 		manifest: {
 			name: process.env.SITE_NAME,
@@ -150,20 +159,18 @@ module.exports = {
 		}
 	},
 	env: {
-		URL_ORIGIN: process.env.DEFAULT_URL,
-		API_BASE_URL: process.env.ADMIN_URL,
+		DEFAULT_URL: process.env.DEFAULT_URL,
+		API_BASE_URL: process.env.API_BASE_URL,
 		ISPRODUCTION: process.env.ISPRODUCTION,
+		GITHUB_PAGES_BASE_URL: process.env.GITHUB_PAGES_BASE_URL,
 		METADATA: metaData
 	},
-	/*
-  ** Axios module configuration
-  */
 	axios: {
 		baseURL: process.env.API_BASE_URL
 	},
 	auth: {
 		redirect: {
-			login: '/'
+			login: '/README'
 		},
 		strategies: {
 			local: {
