@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mvw-100">
       <div class="col-md-12">
         <template
           v-if="port === null">
@@ -9,10 +9,12 @@
             :show="port === null"/>
         </template>
         <template v-else>
-          <img
-            :src="port.topImage"
-            class="pt-md-3 w-50 amigadev-port-image"
-            alt="field">
+          <div class="d-flex w-100 justify-content-center">
+            <img
+              :src="port.topImage"
+              class="pt-md-3 amigadev-port-image"
+              alt="field">
+          </div>
           <h1 class="pt-md-3 m-md-0">{{ port.title }}</h1>
           <p
             class="font-size-18"
@@ -31,9 +33,9 @@
         class="col-md-12 mb-4">
         <h2>Release Builds</h2>
         <Downloads
-          v-if="portDownloads !== null && portDownloads.releases.length > 0"
+          v-if="portDownloads !== null && portDownloads.releases.length > 0 && portDownloads.releases.find(x => !Array.isArray(x.files))"
           :versions="portDownloads.versions"
-          :downloads="portDownloads.releases"
+          :downloads="portDownloads.releases.find(x => x.files !== [])"
           :version_string="Version"
         />
         <span v-else>No release builds available...</span>
@@ -50,9 +52,9 @@
         class="col-md-12">
         <h2>Nightly Builds</h2>
         <Downloads
-          v-if="portDownloads !== null && portDownloads.nightly.length > 0"
+          v-if="portDownloads !== null && portDownloads.nightly.length > 0 && portDownloads.nightly.filter(x => !Array.isArray(x.files)).length > 0"
           :versions="portDownloads.versions"
-          :downloads="portDownloads.nightly"
+          :downloads="portDownloads.nightly.filter(x => !Array.isArray(x.files))"
           version_string="Date"
         />
       </div>

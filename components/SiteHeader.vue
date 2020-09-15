@@ -1,11 +1,11 @@
 <template>
-  <nav class="navbar container justify-content-center">
+  <nav class="navbar container justify-content-center pl-0 pr-0">
     <ul
       v-if="isAuthenticated"
       class="navbar-nav d-none d-md-flex ml-auto"/>
     <ul
       v-else
-      class="navbar-nav col-md-10 d-none d-flex flex-row justify-content-start align-items-center">
+      class="navbar-nav col-12 col-md-12 col-xl-10 d-none d-flex flex-row justify-content-start align-items-center pl-3 pr-0 pl-md-0 pr-md-0">
       <li class="nav-item text-white site-title d-flex justify-content-center ">
         <img
           src="https://avatars1.githubusercontent.com/u/34406884?v=4"

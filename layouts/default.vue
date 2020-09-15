@@ -3,8 +3,8 @@
     <header>
       <SiteHeader/>
     </header>
-    <main class="container d-flex justify-content-center">
-      <div class="col-md-10">
+    <main class="container d-flex justify-content-center pl-3 pr-0 pl-md-0 pr-md-0 pb-4 pb-md-0">
+      <div class="col-12 col-md-12 col-xl-10 p-0">
         <nuxt/>
       </div>
     </main>

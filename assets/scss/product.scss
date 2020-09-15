@@ -1,9 +1,20 @@
-.amigadev-product-image {
-    height: 240px;
-    object-fit: cover;
-    @include media-breakpoint-up(md) {
-        height: 360px;
+.amigadev-port-image {
+	max-width: 50%;
+    @include media-breakpoint-down(sm) {
+		width: 100%;
+        max-width: 100%;
     }
+}
+.container.downloads {
+	.row {
+		@include media-breakpoint-down(sm) {
+			height: auto;
+		}
+
+		&.darkbg {
+			background-color: rgba(74, 81, 104, 0.21) !important;
+		}
+	}
 }
 
 .amigadev-product-content-container {
@@ -19,12 +30,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  
-    -webkit-user-select: none; /* Safari */        
+
+    -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
-  
+
     @include media-breakpoint-down(sm) {
       font-size: 10px;
     }

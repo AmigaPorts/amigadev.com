@@ -1,11 +1,11 @@
 <template>
   <div class="container downloads">
     <div class="row thead">
-      <div class="col-sm-2 th">{{ version_string }}</div>
+      <div class="col-4 col-md-2 th">{{ version_string }}</div>
       <div
         v-for="(version, index) in versions"
         :key="index"
-        class="col-sm th">{{ version.ext }}</div>
+        class="col col-md pl-0 pr-0 pl-md-5 pr-md-5 d-none d-md-block th">{{ version.ext }}</div>
     </div>
     <transition-group
       v-if="downloads"
@@ -30,7 +30,7 @@
       v-if="maxPage > 1"
       class="row">
       <template
-        v-if="currentPage == 1 && maxPage > 1">
+        v-if="currentPage === 1 && maxPage > 1">
         <button
           class="col-sm-12"
           @click.prevent="changePage(1)">
@@ -38,7 +38,7 @@
         </button>
       </template>
       <template
-        v-else-if="currentPage > 1 && currentPage != maxPage && maxPage > 1">
+        v-else-if="currentPage > 1 && currentPage !== maxPage && maxPage > 1">
         <button
           class="col-sm-6"
           @click.prevent="changePage(-1)">
@@ -51,7 +51,7 @@
         </button>
       </template>
       <template
-        v-else-if="currentPage > 1 && currentPage == maxPage && maxPage > 1">
+        v-else-if="currentPage > 1 && currentPage === maxPage && maxPage > 1">
         <button
           class="col-sm-12"
           @click.prevent="changePage(-1)">
@@ -139,8 +139,12 @@ export default {
 			this.updateList();
 		},
 		beforeEnter: function(el) {
-			el.style.opacity = 0;
-			el.style.height = 0;
+			el.childNodes.forEach(function(x) {
+				if (x.style !== undefined) {
+					x.style.opacity = 0;
+					x.style.height = 0;
+				}
+			});
 		},
 		enter: function(el, done) {
 			let index = el.dataset.index;
@@ -151,8 +155,13 @@ export default {
 
 			//console.log(this.maxPage);
 			setTimeout(function() {
-				if (!process.server)
-					Velocity(el, { opacity: 1, height: '30px' }, { complete: done });
+				if (!process.server) {
+					el.childNodes.forEach(function(x) {
+						if (x.style !== undefined) {
+							Velocity(x, { opacity: 1, height: '30px' }, { complete: done });
+						}
+					});
+				}
 			}, delay);
 		},
 		leave: function(el, done) {
@@ -163,8 +172,13 @@ export default {
 					: index) * 50;
 
 			setTimeout(function() {
-				if (!process.server)
-					Velocity(el, { opacity: 0, height: 0 }, { complete: done });
+				if (!process.server) {
+					el.childNodes.forEach(function(x) {
+						if (x.style !== undefined) {
+							Velocity(x, { opacity: 0, height: 0 }, { complete: done });
+						}
+					});
+				}
 			}, delay);
 		},
 		created: function() {
