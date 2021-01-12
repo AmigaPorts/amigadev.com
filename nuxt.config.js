@@ -1,6 +1,6 @@
 const pkg = require('./package');
 require('dotenv').config({
-	path: 'environments/' + process.env.NODE_ENV + '.env'
+	path: 'environments/' + process.env.NODE_ENV + '.env',
 });
 
 const metaData = {
@@ -11,13 +11,13 @@ const metaData = {
 	ogDesc: process.env.SITE_DESCRIPTION,
 	ogImage: process.env.SITE_FALLBACK_IMAGE,
 	fbAppId: process.env.FB_APP_ID,
-	twitterSite: process.env.TWITTER_SITE
+	twitterSite: process.env.TWITTER_SITE,
 };
 
 const headerData = {
 	title: metaData.ogTitle,
 	htmlAttrs: {
-		lang: 'en'
+		lang: 'en',
 	},
 	meta: [
 		{ charset: 'utf-8' },
@@ -25,104 +25,102 @@ const headerData = {
 		{
 			hid: 'description',
 			name: 'description',
-			content: metaData.ogDesc
+			content: metaData.ogDesc,
 		},
 		{
 			hid: 'author',
 			name: 'author',
-			content: metaData.author
+			content: metaData.author,
 		},
 		{
 			hid: 'og:site_name',
 			property: 'og:site_name',
-			content: metaData.siteName
+			content: metaData.siteName,
 		},
 		{
 			hid: 'og:url',
 			property: 'og:url',
-			content: metaData.ogUrl
+			content: metaData.ogUrl,
 		},
 		{
 			hid: 'og:title',
 			property: 'og:title',
-			content: metaData.ogTitle
+			content: metaData.ogTitle,
 		},
 		{
 			hid: 'og:description',
 			property: 'og:description',
-			content: metaData.ogDesc
+			content: metaData.ogDesc,
 		},
 		{
 			hid: 'og:image',
 			property: 'og:image',
-			content: metaData.ogImage
+			content: metaData.ogImage,
 		},
 		{
 			hid: 'fb:app_id',
 			property: 'fb:app_id',
-			content: metaData.fbAppId
+			content: metaData.fbAppId,
 		},
 		{
 			hid: 'twitter:card',
 			property: 'twitter:card',
-			content: 'summary'
+			content: 'summary',
 		},
 		{
 			hid: 'twitter:site',
 			property: 'twitter:site',
-			content: metaData.twitterSite
+			content: metaData.twitterSite,
 		},
 		{
 			hid: 'apple-mobile-web-app-title',
 			property: 'apple-mobile-web-app-title',
-			content: metaData.siteName
-		}
+			content: metaData.siteName,
+		},
 	],
 	link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-	script: []
+	script: [],
 };
 
 module.exports = {
-	mode: 'universal',
-
 	/*
-  ** Headers of the page
-  */
+	 ** Headers of the page
+	 */
 	head: headerData,
 
 	/*
-  ** Customize the progress-bar color
-  */
+	 ** Customize the progress-bar color
+	 */
 	loading: false, // '~/components/LoadingHeader.vue', // { color: '#f0bc02' },
 
 	/*
-  ** Global CSS
-  */
+	 ** Global CSS
+	 */
 	css: [
 		'@/assets/scss/app.scss',
-		{ src: '~/node_modules/highlight.js/styles/hopscotch.css', lang: 'css' }
+		{ src: '~/node_modules/highlight.js/styles/hopscotch.css', lang: 'css' },
 	],
 
 	/*
-  ** Plugins to load before mounting the App
-  */
+	 ** Plugins to load before mounting the App
+	 */
 	plugins: [
 		{
 			src: '~/plugins/velocity',
-			ssr: false
-		}
+			ssr: false,
+		},
 	],
 
 	/*
-  ** Nuxt.js modules
-  */
+	 ** Nuxt.js modules
+	 */
 	modules: [
 		// Doc: https://github.com/nuxt-community/axios-module#usage
 		[
 			'@nuxtjs/axios',
 			{
-				baseURL: process.env.API_BASE_URL
-			}
+				baseURL: process.env.API_BASE_URL,
+			},
 		],
 		'@nuxtjs/auth',
 		'@nuxtjs/pwa',
@@ -135,42 +133,42 @@ module.exports = {
 			'@nuxtjs/dotenv',
 			{
 				path: 'environments/',
-				filename: process.env.NODE_ENV + '.env'
-			}
-		]
+				filename: process.env.NODE_ENV + '.env',
+			},
+		],
 	],
 
 	router: {
-		middleware: ['auth']
+		middleware: ['auth'],
 	},
 	markdownit: {
 		injected: true,
 		preset: 'default',
 		linkify: true,
 		breaks: true,
-		use: ['markdown-it-highlightjs', 'markdown-it-task-lists']
+		use: ['markdown-it-highlightjs', 'markdown-it-task-lists'],
 	},
 	pwa: {
 		manifest: {
 			name: process.env.SITE_NAME,
 			short_name: process.env.SITE_NAME,
 			theme_color: '#000000',
-			background_color: '#141414'
-		}
+			background_color: '#141414',
+		},
 	},
 	env: {
 		DEFAULT_URL: process.env.DEFAULT_URL,
 		API_BASE_URL: process.env.API_BASE_URL,
 		ISPRODUCTION: process.env.ISPRODUCTION,
 		GITHUB_PAGES_BASE_URL: process.env.GITHUB_PAGES_BASE_URL,
-		METADATA: metaData
+		METADATA: metaData,
 	},
 	axios: {
-		baseURL: process.env.API_BASE_URL
+		baseURL: process.env.API_BASE_URL,
 	},
 	auth: {
 		redirect: {
-			login: '/README'
+			login: '/README',
 		},
 		strategies: {
 			local: {
@@ -178,41 +176,41 @@ module.exports = {
 					login: {
 						url: 'jwt-auth/v1/token',
 						method: 'post',
-						propertyName: 'token'
+						propertyName: 'token',
 					},
 					user: { url: 'v1/users', method: 'get', propertyName: '' },
-					logout: false
-				}
-			}
-		}
+					logout: false,
+				},
+			},
+		},
 	},
 	/*
-	** nuxt fontawesome module configuration
-	*/
+	 ** nuxt fontawesome module configuration
+	 */
 	fontawesome: {
 		imports: [
 			{
 				set: '@fortawesome/free-brands-svg-icons',
-				icons: ['fab']
+				icons: ['fab'],
 			},
 			{
 				set: '@fortawesome/free-solid-svg-icons',
-				icons: ['fas']
+				icons: ['fas'],
 			},
 			{
 				set: '@fortawesome/free-regular-svg-icons',
-				icons: ['far']
-			}
-		]
+				icons: ['far'],
+			},
+		],
 	},
 
 	/*
-  ** Build configuration
-  */
+	 ** Build configuration
+	 */
 	build: {
 		/*
-    ** You can extend webpack config here
-    */
+		 ** You can extend webpack config here
+		 */
 		extend(config, ctx) {
 			// Run ESLint on save
 			if (ctx.isDev && ctx.isClient) {
@@ -220,9 +218,9 @@ module.exports = {
 					enforce: 'pre',
 					test: /\.(js|vue)$/,
 					loader: 'eslint-loader',
-					exclude: /(node_modules)/
+					exclude: /(node_modules)/,
 				});
 			}
-		}
-	}
+		},
+	},
 };
